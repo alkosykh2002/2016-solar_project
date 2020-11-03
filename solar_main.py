@@ -10,7 +10,7 @@ from solar_input import *
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
 
-physical_time = 0
+physical_tim = 0
 """Физическое время от начала расчёта.
 Тип: float"""
 
