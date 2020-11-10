@@ -23,7 +23,7 @@ def read_space_objects_data_from_file(input_filename):
                 star = Star()
                 parse_star_parameters(line, star)
                 objects.append(star)
-            if object_type == "planet":
+            elif object_type == "planet":
                 planet = Planet()
                 parse_star_parameters(line, planet)
                 objects.append(planet)
@@ -32,13 +32,18 @@ def read_space_objects_data_from_file(input_filename):
 
     return objects
 
-
 def read_int(line):
-    NalichieE = False
-    for bykva in line:
-        if bykva == "E":
-            NalichieE = True
-    if NalichieE:
+    """Переводит запись больших чисел с символом Е в обычный вид
+
+    Параметры:
+
+    **line** - строка с числом
+    """
+    exist_E = False
+    for symbol in line:
+        if symbol == "E":
+            exist_E = True
+    if exist_E:
         return float(line[0: (line.index("E"))]) * 10 ** (int(line[line.index("E") + 1: len(line)]))
     else:
         return float(line)
@@ -84,7 +89,6 @@ def parse_planet_parameters(line, planet):
     **planet** — объект планеты.
     """
     line = line.split()
-    print(line)
     planet.R = read_int(line[1])
     planet.color = line[2]
     planet.m = read_int(line[3])
@@ -92,6 +96,7 @@ def parse_planet_parameters(line, planet):
     planet.y = read_int(line[5])
     planet.Vx = read_int(line[6])
     planet.Vy = read_int(line[7])
+
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -107,20 +112,10 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            out_file.write("Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
-                           str(obj.Vy))
-            out_file.write("Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
-                           str(obj.Vy))
-            # print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
-            print(out_file, "Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
-                  str(obj.Vy))
-
-            # FIX: should store real values
-
-
-# FIX: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
-
+            if isinstance(obj, Star):
+                object_type = "star"
+            else:
+                object_type = "planet"
+            out_file.write(object_type, str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx), str(obj.Vy))
 if __name__ == "__main__":
     print("This module is not for direct call!")
-    line = "1.265423"
-    print(read_int(line))
