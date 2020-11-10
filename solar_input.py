@@ -32,6 +32,12 @@ def read_space_objects_data_from_file(input_filename):
 
     return objects
 
+def read_int(line):
+    if "E" in line == True:
+        return int(line[0,(line.index("E")-1)])*10**(int(line[line.index("E")+1,len(line)]))
+    else:
+        return int(line)
+
 
 def parse_star_parameters(line, star):
     """Считывает данные о звезде из строки.
@@ -47,14 +53,14 @@ def parse_star_parameters(line, star):
     **line** — строка с описание звезды.
     **star** — объект звезды.
     """
-
-    star.R = int(line.split()[1])
-    star.color = line.split()[2]
-    star.m = int(line.split()[3])
-    star.x = int(line.split()[4])
-    star.y = int(line.split()[5])
-    star.Vx = int(line.split()[6])
-    star.Vy = int(line.split()[7])
+    line = line.split()
+    star.R = read_int(line[1])
+    star.color = line[2]
+    star.m = read_int(line[3])
+    star.x = read_int(line[4])
+    star.y = read_int(line[5])
+    star.Vx = read_int(line[6])
+    star.Vy = read_int(line[7])
 
 
 def parse_planet_parameters(line, planet):
@@ -72,13 +78,14 @@ def parse_planet_parameters(line, planet):
     **line** — строка с описание планеты.
     **planet** — объект планеты.
     """
-    planet.R = int(line.split()[1])
-    planet.color = line.split()[2]
-    planet.m = int(line.split()[3])
-    planet.x = int(line.split()[4])
-    planet.y = int(line.split()[5])
-    planet.Vx = int(line.split()[6])
-    planet.Vy = int(line.split()[7])
+    line = line.split()
+    planet.R = read_int(line[1])
+    planet.color = line[2]
+    planet.m = read_int(line[3])
+    planet.x = read_int(line[4])
+    planet.y = read_int(line[5])
+    planet.Vx = read_int(line[6])
+    planet.Vy = read_int(line[7])
 
 
 
