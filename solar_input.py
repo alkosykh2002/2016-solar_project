@@ -32,11 +32,16 @@ def read_space_objects_data_from_file(input_filename):
 
     return objects
 
+
 def read_int(line):
-    if "E" in line == True:
-        return int(line[0,(line.index("E")-1)])*10**(int(line[line.index("E")+1,len(line)]))
+    NalichieE = False
+    for bykva in line:
+        if bykva == "E":
+            NalichieE = True
+    if NalichieE:
+        return float(line[0: (line.index("E"))]) * 10 ** (int(line[line.index("E") + 1: len(line)]))
     else:
-        return int(line)
+        return float(line)
 
 
 def parse_star_parameters(line, star):
@@ -79,6 +84,7 @@ def parse_planet_parameters(line, planet):
     **planet** — объект планеты.
     """
     line = line.split()
+    print(line)
     planet.R = read_int(line[1])
     planet.color = line[2]
     planet.m = read_int(line[3])
@@ -86,7 +92,6 @@ def parse_planet_parameters(line, planet):
     planet.y = read_int(line[5])
     planet.Vx = read_int(line[6])
     planet.Vy = read_int(line[7])
-
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -106,9 +111,9 @@ def write_space_objects_data_to_file(output_filename, space_objects):
                            str(obj.Vy))
             out_file.write("Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
                            str(obj.Vy))
-            #print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
+            # print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
             print(out_file, "Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
-                           str(obj.Vy))
+                  str(obj.Vy))
 
             # FIX: should store real values
 
@@ -117,3 +122,5 @@ def write_space_objects_data_to_file(output_filename, space_objects):
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
+    line = "1.265423"
+    print(read_int(line))

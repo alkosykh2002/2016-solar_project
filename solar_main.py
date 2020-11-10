@@ -1,5 +1,6 @@
 # coding: utf-8
 # license: GPLv3
+# над проектом работают: Косых Алексей, Унаров Айтал
 
 import tkinter
 from tkinter.filedialog import *
@@ -55,6 +56,7 @@ def start_execution():
 
     execution()
     print('Started execution...')
+    print(space_objects)
 
 
 def stop_execution():
@@ -151,3 +153,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+while True:
+    if perform_execution:
+        execution()
