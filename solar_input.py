@@ -19,10 +19,14 @@ def read_space_objects_data_from_file(input_filename):
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
             object_type = line.split()[0].lower()
-            if object_type == "star":  # FIXME: do the same for planet
+            if object_type == "star":
                 star = Star()
                 parse_star_parameters(line, star)
                 objects.append(star)
+            if object_type == "planet":
+                planet = Planet()
+                parse_star_parameters(line, planet)
+                objects.append(planet)
             else:
                 print("Unknown space object")
 
@@ -45,7 +49,7 @@ def parse_star_parameters(line, star):
     """
 
     star.R = int(line.split()[1])
-    star.color = int(line.split()[2])
+    star.color = line.split()[2]
     star.m = int(line.split()[3])
     star.x = int(line.split()[4])
     star.y = int(line.split()[5])
@@ -69,12 +73,13 @@ def parse_planet_parameters(line, planet):
     **planet** — объект планеты.
     """
     planet.R = int(line.split()[1])
-    planet.color = int(line.split()[2])
+    planet.color = line.split()[2]
     planet.m = int(line.split()[3])
     planet.x = int(line.split()[4])
     planet.y = int(line.split()[5])
     planet.Vx = int(line.split()[6])
     planet.Vy = int(line.split()[7])
+
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -94,12 +99,14 @@ def write_space_objects_data_to_file(output_filename, space_objects):
                            str(obj.Vy))
             out_file.write("Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
                            str(obj.Vy))
-            print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
+            #print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
+            print(out_file, "Star ", str(obj.r), str(obj.color), str(obj.m), str(obj.x), str(obj.y), str(obj.Vx),
+                           str(obj.Vy))
 
-            # FIXME: should store real values
+            # FIX: should store real values
 
 
-# FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
+# FIX: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
